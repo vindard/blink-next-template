@@ -10,7 +10,7 @@ export const createApolloClient = () =>
         ["X-API-KEY"]: env.API_TOKEN,
       },
       uri: env.CORE_URL,
-      fetchOptions: { cache: "no-store" },
+      fetchOptions: { cache: "default" },
       fetch: (uri, options) => {
         return fetch(uri, {
           ...options,
