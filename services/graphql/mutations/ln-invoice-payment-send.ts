@@ -34,11 +34,11 @@ gql`
   }
 `;
 
-export async function lnInvoicePaymentSend({
+const lnInvoicePaymentSend = async ({
   paymentRequest,
   memo,
   walletId,
-}: LnInvoicePaymentInput): Promise<Error | LnInvoicePaymentSendMutation> {
+}: LnInvoicePaymentInput): Promise<LnInvoicePaymentSendMutation | Error> => {
   const client = createApolloClient();
   try {
     const { data } = await client.mutate<LnInvoicePaymentSendMutation>({
@@ -57,13 +57,11 @@ export async function lnInvoicePaymentSend({
     }
 
     return data;
-  } catch (error) {
-    console.error("Error in LnInvoicePaymentSend ", error);
-    if (error instanceof Error) {
-      return new Error(error.message);
-    } else {
-      console.error("Unknown Error in LnInvoicePaymentSend");
-      return new Error("Unknown error");
-    }
+  } catch (err) {
+    return err instanceof Error
+      ? err
+      : new Error("Unknown error in LnInvoicePaymentSend mutation");
   }
-}
+};
+
+export { lnInvoicePaymentSend };

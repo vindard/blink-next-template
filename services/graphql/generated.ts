@@ -2458,7 +2458,7 @@ export type LnInvoicePaymentSendMutationHookResult = ReturnType<typeof useLnInvo
 export type LnInvoicePaymentSendMutationResult = Apollo.MutationResult<LnInvoicePaymentSendMutation>;
 export type LnInvoicePaymentSendMutationOptions = Apollo.BaseMutationOptions<LnInvoicePaymentSendMutation, LnInvoicePaymentSendMutationVariables>;
 export const MeDocument = gql`
-    query me {
+    query Me {
   me {
     createdAt
     id

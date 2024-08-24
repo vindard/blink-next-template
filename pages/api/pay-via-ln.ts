@@ -16,26 +16,22 @@ export default async function handler(
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 
-  try {
-    const { paymentRequest, memo, walletId }: LnInvoicePaymentInput = req.body;
+  const { paymentRequest, memo, walletId }: LnInvoicePaymentInput = req.body;
 
-    if (!paymentRequest || !walletId) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-
-    const result = await lnInvoicePaymentSend({
-      paymentRequest,
-      memo,
-      walletId,
-    });
-
-    if (result instanceof Error) {
-      return res.status(500).json({ error: result.message });
-    }
-
-    return res.status(200).json(result.lnInvoicePaymentSend);
-  } catch (error) {
-    console.error("API Error:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+  if (!paymentRequest || !walletId) {
+    return res.status(400).json({ error: "Missing required fields" });
   }
+
+  const result = await lnInvoicePaymentSend({
+    paymentRequest,
+    memo,
+    walletId,
+  });
+
+  if (result instanceof Error) {
+    console.error("Error executing payment send operation:", result);
+    return res.status(500).json({ error: result.message });
+  }
+
+  return res.status(200).json(result.lnInvoicePaymentSend);
 }

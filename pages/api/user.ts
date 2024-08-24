@@ -7,11 +7,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<MeQuery | { error: string }>
 ) {
-  try {
-    const response = await fetchUserData();
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    res.status(500).json({ error: "Failed to fetch user data" });
+  const response = await fetchUserData();
+  if (response instanceof Error) {
+    console.error("Error fetching user data:", response);
+    return res.status(500).json({ error: "Failed to fetch user data" });
   }
+  return res.status(200).json(response.data);
 }

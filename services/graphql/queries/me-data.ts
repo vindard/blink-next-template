@@ -1,10 +1,10 @@
-import { gql } from "@apollo/client";
+import { ApolloQueryResult, gql } from "@apollo/client";
 
 import { createApolloClient } from "..";
 import { MeDocument, MeQuery } from "../generated";
 
 gql`
-  query me {
+  query Me {
     me {
       createdAt
       id
@@ -34,7 +34,7 @@ gql`
   }
 `;
 
-export async function fetchUserData() {
+const fetchUserData = async (): Promise<ApolloQueryResult<MeQuery> | Error> => {
   const client = createApolloClient();
   try {
     const data = await client.query<MeQuery>({
@@ -42,12 +42,8 @@ export async function fetchUserData() {
     });
     return data;
   } catch (err) {
-    if (err instanceof Error) {
-      console.error("error", err);
-      throw new Error(err.message);
-    } else {
-      console.error("Unknown error");
-      throw new Error("Unknown error");
-    }
+    return err instanceof Error ? err : new Error("Unknown error in Me query");
   }
-}
+};
+
+export { fetchUserData };
