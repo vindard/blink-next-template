@@ -1,5 +1,5 @@
-import LnPaymentForm from "./components/LnPaymentForm";
-import User from "./components/User";
+import LnPaymentForm from "@/components/LnPaymentForm";
+import User from "@/components/User";
 
 const HomePage = () => {
   return (
