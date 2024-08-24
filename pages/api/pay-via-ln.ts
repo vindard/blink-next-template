@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { lnInvoicePaymentSend } from "@/services/graphql/mutations/ln-invoice-payment-send";
+import { lnInvoicePaymentSend } from "@/services/blink/mutations/ln-invoice-payment-send";
 import {
   LnInvoicePaymentInput,
   LnInvoicePaymentSendMutation,
-} from "@/services/graphql/generated";
+} from "@/services/blink/generated";
 
 export default async function handler(
   req: NextApiRequest,

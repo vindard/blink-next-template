@@ -1,6 +1,6 @@
 'use client';
 
-import { MeQuery } from '@/services/graphql/generated';
+import { MeQuery } from '@/services/blink/generated';
 import { useEffect, useState } from 'react';
 
 const User = () => {

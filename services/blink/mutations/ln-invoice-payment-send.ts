@@ -4,7 +4,7 @@ import {
   LnInvoicePaymentInput,
   LnInvoicePaymentSendDocument,
   LnInvoicePaymentSendMutation,
-} from "@/services/graphql/generated";
+} from "@/services/blink/generated";
 import { createApolloClient } from "..";
 
 gql`
