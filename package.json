@@ -8,6 +8,8 @@
     "start": "PORT=9000 next start",
     "start-server": "pnpm build && pnpm start",
     "lint": "next lint",
+    "lint:fix": "eslint --max-warnings 0 --fix --ext .ts,.tsx .",
+    "tsc-check": "tsc --noEmit",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
