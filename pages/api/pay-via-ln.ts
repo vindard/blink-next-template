@@ -1,14 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { lnInvoicePaymentSend } from "@/services/blink/mutations/ln-invoice-payment-send";
+import { lnurlPaymentSend } from "@/services/blink/mutations/ln-url-payment-send";
 import {
-  LnInvoicePaymentInput,
-  LnInvoicePaymentSendMutation,
+  LnurlPaymentSendInput,
+  LnurlPaymentSendMutation,
 } from "@/services/blink/generated";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<
-    LnInvoicePaymentSendMutation["lnInvoicePaymentSend"] | { error: string }
+    LnurlPaymentSendMutation["lnurlPaymentSend"] | { error: string }
   >
 ) {
   if (req.method !== "POST") {
@@ -16,15 +16,15 @@ export default async function handler(
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 
-  const { paymentRequest, memo, walletId }: LnInvoicePaymentInput = req.body;
+  const { lnurl, amount, walletId }: LnurlPaymentSendInput = req.body;
 
-  if (!paymentRequest || !walletId) {
+  if (!lnurl || !amount || !walletId) {
     return res.status(400).json({ error: "Missing required fields" });
   }
 
-  const result = await lnInvoicePaymentSend({
-    paymentRequest,
-    memo,
+  const result = await lnurlPaymentSend({
+    lnurl,
+    amount,
     walletId,
   });
 
@@ -33,5 +33,5 @@ export default async function handler(
     return res.status(500).json({ error: result.message });
   }
 
-  return res.status(200).json(result.lnInvoicePaymentSend);
+  return res.status(200).json(result.lnurlPaymentSend);
 }
