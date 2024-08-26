@@ -1,6 +1,6 @@
 import { ApolloQueryResult, gql } from "@apollo/client";
 
-import { createApolloClient } from "..";
+import { createApolloClient } from "../client";
 import { MeDocument, MeQuery } from "../generated";
 
 gql`
