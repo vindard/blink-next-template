@@ -1,9 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { lnurlPaymentSend } from "@/services/blink/mutations/ln-url-payment-send";
+import { lnurlPaymentSend } from "@/services/server/blink/mutations/ln-url-payment-send";
 import {
   LnurlPaymentSendInput,
   LnurlPaymentSendMutation,
-} from "@/services/blink/generated";
+} from "@/services/server/blink/generated";
 
 export default async function handler(
   req: NextApiRequest,
