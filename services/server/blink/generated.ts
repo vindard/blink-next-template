@@ -2392,12 +2392,12 @@ export const Link__Purpose = {
 } as const;
 
 export type Link__Purpose = typeof Link__Purpose[keyof typeof Link__Purpose];
-export type LnurlPaymentSendMutationVariables = Exact<{
-  input: LnurlPaymentSendInput;
+export type LnInvoicePaymentSendMutationVariables = Exact<{
+  input: LnInvoicePaymentInput;
 }>;
 
 
-export type LnurlPaymentSendMutation = { readonly __typename: 'Mutation', readonly lnurlPaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly transaction?: { readonly __typename: 'Transaction', readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger' } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string, readonly paymentRequest: string } | { readonly __typename: 'InitiationViaOnChain' }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly preImage?: string | null } | { readonly __typename: 'SettlementViaLn', readonly preImage?: string | null } | { readonly __typename: 'SettlementViaOnChain' } } | null } };
+export type LnInvoicePaymentSendMutation = { readonly __typename: 'Mutation', readonly lnInvoicePaymentSend: { readonly __typename: 'PaymentSendPayload', readonly status?: PaymentSendResult | null, readonly errors: ReadonlyArray<{ readonly __typename: 'GraphQLApplicationError', readonly message: string }>, readonly transaction?: { readonly __typename: 'Transaction', readonly initiationVia: { readonly __typename: 'InitiationViaIntraLedger' } | { readonly __typename: 'InitiationViaLn', readonly paymentHash: string, readonly paymentRequest: string } | { readonly __typename: 'InitiationViaOnChain' }, readonly settlementVia: { readonly __typename: 'SettlementViaIntraLedger', readonly preImage?: string | null } | { readonly __typename: 'SettlementViaLn', readonly preImage?: string | null } | { readonly __typename: 'SettlementViaOnChain' } } | null } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2405,9 +2405,9 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 export type MeQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly createdAt: number, readonly id: string, readonly language: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly defaultWalletId: string, readonly displayCurrency: string, readonly id: string, readonly level: AccountLevel, readonly callbackPortalUrl: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly accountId: string, readonly balance: number, readonly id: string, readonly pendingIncomingBalance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly accountId: string, readonly balance: number, readonly id: string, readonly pendingIncomingBalance: number, readonly walletCurrency: WalletCurrency }> }, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null };
 
 
-export const LnurlPaymentSendDocument = gql`
-    mutation LnurlPaymentSend($input: LnurlPaymentSendInput!) {
-  lnurlPaymentSend(input: $input) {
+export const LnInvoicePaymentSendDocument = gql`
+    mutation LnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
+  lnInvoicePaymentSend(input: $input) {
     errors {
       message
     }
@@ -2431,32 +2431,32 @@ export const LnurlPaymentSendDocument = gql`
   }
 }
     `;
-export type LnurlPaymentSendMutationFn = Apollo.MutationFunction<LnurlPaymentSendMutation, LnurlPaymentSendMutationVariables>;
+export type LnInvoicePaymentSendMutationFn = Apollo.MutationFunction<LnInvoicePaymentSendMutation, LnInvoicePaymentSendMutationVariables>;
 
 /**
- * __useLnurlPaymentSendMutation__
+ * __useLnInvoicePaymentSendMutation__
  *
- * To run a mutation, you first call `useLnurlPaymentSendMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useLnurlPaymentSendMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useLnInvoicePaymentSendMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLnInvoicePaymentSendMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [lnurlPaymentSendMutation, { data, loading, error }] = useLnurlPaymentSendMutation({
+ * const [lnInvoicePaymentSendMutation, { data, loading, error }] = useLnInvoicePaymentSendMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useLnurlPaymentSendMutation(baseOptions?: Apollo.MutationHookOptions<LnurlPaymentSendMutation, LnurlPaymentSendMutationVariables>) {
+export function useLnInvoicePaymentSendMutation(baseOptions?: Apollo.MutationHookOptions<LnInvoicePaymentSendMutation, LnInvoicePaymentSendMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<LnurlPaymentSendMutation, LnurlPaymentSendMutationVariables>(LnurlPaymentSendDocument, options);
+        return Apollo.useMutation<LnInvoicePaymentSendMutation, LnInvoicePaymentSendMutationVariables>(LnInvoicePaymentSendDocument, options);
       }
-export type LnurlPaymentSendMutationHookResult = ReturnType<typeof useLnurlPaymentSendMutation>;
-export type LnurlPaymentSendMutationResult = Apollo.MutationResult<LnurlPaymentSendMutation>;
-export type LnurlPaymentSendMutationOptions = Apollo.BaseMutationOptions<LnurlPaymentSendMutation, LnurlPaymentSendMutationVariables>;
+export type LnInvoicePaymentSendMutationHookResult = ReturnType<typeof useLnInvoicePaymentSendMutation>;
+export type LnInvoicePaymentSendMutationResult = Apollo.MutationResult<LnInvoicePaymentSendMutation>;
+export type LnInvoicePaymentSendMutationOptions = Apollo.BaseMutationOptions<LnInvoicePaymentSendMutation, LnInvoicePaymentSendMutationVariables>;
 export const MeDocument = gql`
     query Me {
   me {

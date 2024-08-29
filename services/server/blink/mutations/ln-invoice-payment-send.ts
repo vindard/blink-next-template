@@ -2,14 +2,14 @@ import { gql } from "@apollo/client";
 
 import { createApolloClient } from "../client";
 import {
-  LnurlPaymentSendInput,
-  LnurlPaymentSendDocument,
-  LnurlPaymentSendMutation,
+  LnInvoicePaymentInput,
+  LnInvoicePaymentSendDocument,
+  LnInvoicePaymentSendMutation,
 } from "../generated";
 
 gql`
-  mutation LnurlPaymentSend($input: LnurlPaymentSendInput!) {
-    lnurlPaymentSend(input: $input) {
+  mutation LnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
+    lnInvoicePaymentSend(input: $input) {
       errors {
         message
       }
@@ -34,34 +34,34 @@ gql`
   }
 `;
 
-const lnurlPaymentSend = async ({
-  amount,
-  lnurl,
+const lnInvoicePaymentSend = async ({
   walletId,
-}: LnurlPaymentSendInput): Promise<LnurlPaymentSendMutation | Error> => {
+  paymentRequest,
+  memo,
+}: LnInvoicePaymentInput): Promise<LnInvoicePaymentSendMutation | Error> => {
   const client = createApolloClient();
   try {
-    const { data } = await client.mutate<LnurlPaymentSendMutation>({
-      mutation: LnurlPaymentSendDocument,
+    const { data } = await client.mutate<LnInvoicePaymentSendMutation>({
+      mutation: LnInvoicePaymentSendDocument,
       variables: {
         input: {
           walletId,
-          lnurl,
-          amount,
+          paymentRequest,
+          memo,
         },
       },
     });
 
     if (!data) {
-      return new Error("No data returned from LnurlPaymentSendMutation");
+      return new Error("No data returned from LnInvoicePaymentSendMutation");
     }
 
     return data;
   } catch (err) {
     return err instanceof Error
       ? err
-      : new Error("Unknown error in LnurlPaymentSend mutation");
+      : new Error("Unknown error in LnInvoicePaymentSend mutation");
   }
 };
 
-export { lnurlPaymentSend };
+export { lnInvoicePaymentSend };

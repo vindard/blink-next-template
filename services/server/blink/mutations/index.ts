@@ -1,1 +1,1 @@
-export * from "./ln-url-payment-send";
+export * from "./ln-invoice-payment-send";
