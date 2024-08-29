@@ -3,9 +3,9 @@
 import { useState } from 'react';
 
 const PaymentForm = () => {
-  const [lnurl, setLnurl] = useState('');
-  const [amount, setAmount] = useState(0);
   const [walletId, setWalletId] = useState('');
+  const [invoice, setInvoice] = useState('');
+  const [memo, setMemo] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,9 +22,9 @@ const PaymentForm = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          lnurl,
-          amount,
           walletId,
+          paymentRequest: invoice,
+          memo,
         }),
       });
 
@@ -57,22 +57,22 @@ const PaymentForm = () => {
       <h2>Pay Via LN</h2>
       <form onSubmit={handlePaymentSubmit}>
         <div>
-          <label htmlFor="lnurl">Payment Request:</label>
+          <label htmlFor="invoice">Payment Request:</label>
           <input
-            id="lnurl"
+            id="invoice"
             type="text"
-            value={lnurl}
-            onChange={(e) => setLnurl(e.target.value)}
+            value={invoice}
+            onChange={(e) => setInvoice(e.target.value)}
             required
           />
         </div>
         <div>
-          <label htmlFor="amount">Amount:</label>
+          <label htmlFor="memo">Memo:</label>
           <input
-            id="amount"
+            id="memo"
             type="text"
-            value={amount}
-            onChange={(e) => setAmount(parseInt(e.target.value, 10))}
+            value={memo}
+            onChange={(e) => setMemo(e.target.value)}
           />
         </div>
         <div>
