@@ -1,7 +1,8 @@
 import { ApolloQueryResult, gql } from "@apollo/client";
 
+import { MeDocument, MeQuery } from "@/services/common/blink/generated";
+
 import { createApolloClient } from "../client";
-import { MeDocument, MeQuery } from "../generated";
 
 gql`
   query Me {

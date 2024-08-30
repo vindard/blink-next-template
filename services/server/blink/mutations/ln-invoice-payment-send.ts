@@ -1,11 +1,12 @@
 import { gql } from "@apollo/client";
 
-import { createApolloClient } from "../client";
 import {
   LnInvoicePaymentInput,
   LnInvoicePaymentSendDocument,
   LnInvoicePaymentSendMutation,
-} from "../generated";
+} from "@/services/common/blink/generated";
+
+import { createApolloClient } from "../client";
 
 gql`
   mutation LnInvoicePaymentSend($input: LnInvoicePaymentInput!) {

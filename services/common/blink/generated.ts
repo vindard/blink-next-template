@@ -2392,6 +2392,13 @@ export const Link__Purpose = {
 } as const;
 
 export type Link__Purpose = typeof Link__Purpose[keyof typeof Link__Purpose];
+export type BtcSatPriceQueryVariables = Exact<{
+  currency?: InputMaybe<Scalars['DisplayCurrency']['input']>;
+}>;
+
+
+export type BtcSatPriceQuery = { readonly __typename: 'Query', readonly realtimePrice: { readonly __typename: 'RealtimePrice', readonly id: string, readonly timestamp: number, readonly btcSatPrice: { readonly __typename: 'PriceOfOneSatInMinorUnit', readonly base: number, readonly offset: number }, readonly usdCentPrice: { readonly __typename: 'PriceOfOneUsdCentInMinorUnit', readonly base: number, readonly offset: number }, readonly denominatorCurrencyDetails: { readonly __typename: 'Currency', readonly id: string, readonly fractionDigits: number, readonly name: string, readonly symbol: string, readonly flag: string } } };
+
 export type LnInvoicePaymentSendMutationVariables = Exact<{
   input: LnInvoicePaymentInput;
 }>;
@@ -2405,6 +2412,62 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 export type MeQuery = { readonly __typename: 'Query', readonly me?: { readonly __typename: 'User', readonly createdAt: number, readonly id: string, readonly language: string, readonly phone?: string | null, readonly totpEnabled: boolean, readonly username?: string | null, readonly defaultAccount: { readonly __typename: 'ConsumerAccount', readonly defaultWalletId: string, readonly displayCurrency: string, readonly id: string, readonly level: AccountLevel, readonly callbackPortalUrl: string, readonly wallets: ReadonlyArray<{ readonly __typename: 'BTCWallet', readonly accountId: string, readonly balance: number, readonly id: string, readonly pendingIncomingBalance: number, readonly walletCurrency: WalletCurrency } | { readonly __typename: 'UsdWallet', readonly accountId: string, readonly balance: number, readonly id: string, readonly pendingIncomingBalance: number, readonly walletCurrency: WalletCurrency }> }, readonly email?: { readonly __typename: 'Email', readonly address?: string | null, readonly verified?: boolean | null } | null } | null };
 
 
+export const BtcSatPriceDocument = gql`
+    query BtcSatPrice($currency: DisplayCurrency) {
+  realtimePrice(currency: $currency) {
+    id
+    timestamp
+    btcSatPrice {
+      base
+      offset
+    }
+    usdCentPrice {
+      base
+      offset
+    }
+    denominatorCurrencyDetails {
+      id
+      fractionDigits
+      name
+      symbol
+      flag
+    }
+  }
+}
+    `;
+
+/**
+ * __useBtcSatPriceQuery__
+ *
+ * To run a query within a React component, call `useBtcSatPriceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useBtcSatPriceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useBtcSatPriceQuery({
+ *   variables: {
+ *      currency: // value for 'currency'
+ *   },
+ * });
+ */
+export function useBtcSatPriceQuery(baseOptions?: Apollo.QueryHookOptions<BtcSatPriceQuery, BtcSatPriceQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<BtcSatPriceQuery, BtcSatPriceQueryVariables>(BtcSatPriceDocument, options);
+      }
+export function useBtcSatPriceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<BtcSatPriceQuery, BtcSatPriceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<BtcSatPriceQuery, BtcSatPriceQueryVariables>(BtcSatPriceDocument, options);
+        }
+export function useBtcSatPriceSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<BtcSatPriceQuery, BtcSatPriceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<BtcSatPriceQuery, BtcSatPriceQueryVariables>(BtcSatPriceDocument, options);
+        }
+export type BtcSatPriceQueryHookResult = ReturnType<typeof useBtcSatPriceQuery>;
+export type BtcSatPriceLazyQueryHookResult = ReturnType<typeof useBtcSatPriceLazyQuery>;
+export type BtcSatPriceSuspenseQueryHookResult = ReturnType<typeof useBtcSatPriceSuspenseQuery>;
+export type BtcSatPriceQueryResult = Apollo.QueryResult<BtcSatPriceQuery, BtcSatPriceQueryVariables>;
 export const LnInvoicePaymentSendDocument = gql`
     mutation LnInvoicePaymentSend($input: LnInvoicePaymentInput!) {
   lnInvoicePaymentSend(input: $input) {

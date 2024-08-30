@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { fetchUserData } from "@/services/server/blink/queries/me-data";
-import { MeQuery } from "@/services/server/blink/generated";
+import { MeQuery } from "@/services/common/blink/generated";
 
 export default async function handler(
   req: NextApiRequest,

@@ -1,6 +1,6 @@
 overwrite: true
 schema:
-  - "services/server/blink/supergraph.graphql"
+  - "services/common/blink/supergraph.graphql"
 documents:
   - "app/**/*.ts"
   - "app/**/*.tsx"
@@ -8,7 +8,7 @@ documents:
   - "services/**/*.tsx"
   - "e2e/**/*.ts"
 generates:
-  services/server/blink/generated.ts:
+  services/common/blink/generated.ts:
     plugins:
       - typescript
       - typescript-operations

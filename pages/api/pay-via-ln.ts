@@ -3,7 +3,7 @@ import { lnInvoicePaymentSend } from "@/services/server/blink/mutations/ln-invoi
 import {
   LnInvoicePaymentInput,
   LnInvoicePaymentSendMutation,
-} from "@/services/server/blink/generated";
+} from "@/services/common/blink/generated";
 
 export default async function handler(
   req: NextApiRequest,
