@@ -3,10 +3,10 @@ import { gql } from "@apollo/client";
 import {
   BtcSatPriceDocument,
   BtcSatPriceQuery,
-  BtcSatPriceQueryVariables,
 } from "@/services/common/blink/generated";
 
 import { createApolloClient } from "../client";
+import BigNumber from "bignumber.js";
 
 gql`
   query BtcSatPrice($currency: DisplayCurrency) {
@@ -32,23 +32,74 @@ gql`
   }
 `;
 
-const btcSatPrice = async (
-  currency: BtcSatPriceQueryVariables
-): Promise<BtcSatPriceQuery | Error> => {
+const priceOfOneBtcInTtdFromPriceOfOneSatInMinorUnit = (
+  price: BtcSatPriceQuery["realtimePrice"]["btcSatPrice"]
+): BigNumber => {
+  const base = BigNumber(price.base);
+  const priceOfOneSatInTtdCents = base.dividedBy(
+    new BigNumber(10).pow(price.offset)
+  );
+  const priceOfOneBtcInTtdCents = priceOfOneSatInTtdCents.multipliedBy(
+    new BigNumber(10).pow(8)
+  );
+  const priceOfOneBtcInTtd = priceOfOneBtcInTtdCents.dividedBy(
+    new BigNumber(10).pow(2)
+  );
+  return priceOfOneBtcInTtd;
+};
+
+const priceOfOneUsdInTtdFromPriceOfOneUsdCentInMinorUnit = (
+  price: BtcSatPriceQuery["realtimePrice"]["usdCentPrice"]
+): BigNumber => {
+  const base = BigNumber(price.base);
+  const priceOfOneUsd = base.dividedBy(new BigNumber(10).pow(price.offset));
+  return priceOfOneUsd;
+};
+
+const priceOfOneBtcInUsd = (
+  price: BtcSatPriceQuery["realtimePrice"]
+): BigNumber => {
+  const priceOfOneBtcInTtd = priceOfOneBtcInTtdFromPriceOfOneSatInMinorUnit(
+    price.btcSatPrice
+  );
+  const priceOfOneUsdInTtd = priceOfOneUsdInTtdFromPriceOfOneUsdCentInMinorUnit(
+    price.usdCentPrice
+  );
+
+  return new BigNumber(
+    priceOfOneBtcInTtd.dividedBy(priceOfOneUsdInTtd).toPrecision(12)
+  );
+};
+
+const btcSatPriceInTtd = async (): Promise<
+  | {
+      priceOfOneBtcInTtd: string;
+      priceOfOneUsdInTtd: string;
+      priceOfOneBtcInUsd: string;
+    }
+  | Error
+> => {
   const client = createApolloClient();
   try {
     const { data } = await client.query<BtcSatPriceQuery>({
       query: BtcSatPriceDocument,
-      variables: {
-        currency,
-      },
+      variables: { currency: "TTD" },
     });
 
     if (!data) {
       return new Error("No data returned from BtcSatPriceQuery");
     }
 
-    return data;
+    const { realtimePrice } = data;
+    return {
+      priceOfOneBtcInTtd: priceOfOneBtcInTtdFromPriceOfOneSatInMinorUnit(
+        realtimePrice.btcSatPrice
+      ).toString(),
+      priceOfOneUsdInTtd: priceOfOneUsdInTtdFromPriceOfOneUsdCentInMinorUnit(
+        realtimePrice.usdCentPrice
+      ).toString(),
+      priceOfOneBtcInUsd: priceOfOneBtcInUsd(realtimePrice).toString(),
+    };
   } catch (err) {
     return err instanceof Error
       ? err
@@ -56,4 +107,4 @@ const btcSatPrice = async (
   }
 };
 
-export { btcSatPrice };
+export { btcSatPriceInTtd };
