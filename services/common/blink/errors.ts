@@ -1,4 +1,4 @@
-import { DomainError } from "@/domain";
+import { DomainError } from "@/domain/errors";
 
 export class BlinkError extends DomainError {}
 export class CouldNotFetchPrice extends BlinkError {}
