@@ -1,6 +1,6 @@
 'use client';
 
-import { MeQuery } from '@/services/server/blink/generated';
+import { MeQuery } from "@/services/common/blink/generated";
 import { useEffect, useState } from 'react';
 
 const User = () => {
