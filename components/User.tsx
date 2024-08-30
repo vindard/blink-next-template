@@ -1,8 +1,7 @@
 'use client';
 
-import { btcSatPriceInTtd } from "@/services/client/blink/queries";
+import { btcSatPriceInTtd } from "@/services/client/blink";
 import { MeQuery } from "@/services/common/blink/generated";
-import BigNumber from "bignumber.js";
 import { useEffect, useState } from 'react';
 
 const User = () => {
